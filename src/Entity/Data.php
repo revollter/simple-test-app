@@ -18,7 +18,7 @@ class Data
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'data')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", nullable: false)]
     private ?User $account = null;
 
     #[ORM\Column]

@@ -114,12 +114,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeData(Data $data): static
     {
-        if ($this->data->removeElement($data)) {
-            // set the owning side to null (unless already changed)
-            if ($data->getAccount() === $this) {
-                $data->setAccount(null);
-            }
-        }
+        $this->data->removeElement($data);
 
         return $this;
     }
