@@ -19,6 +19,8 @@ final class PenColorValidator extends ConstraintValidator
             $this->context->buildViolation($constraint->message)
                 ->atPath('color')
                 ->addViolation();
+        } else {
+            $value->setColor(null);
         }
     }
 }
