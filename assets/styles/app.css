@@ -1,3 +1,27 @@
-body {
+.header-custom {
+    background: linear-gradient(90deg, #635f5f, #403d3d);
+    padding: 15px 0;
+    color: #eaeaea;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
+.header-custom a {
+    color: #ffb86c;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.header-custom a:hover {
+    color: #ffd08a;
+}
+
+.header-custom .welcome-text {
+    font-size: 0.95rem;
+}
+
+.header-custom .welcome-text span {
+    font-weight: 600;
 }

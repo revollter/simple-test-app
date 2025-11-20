@@ -13,7 +13,7 @@
     {% for item in data %}
         <tr>
             <td>{{ item.id }}</td>
-            <td>{{ item.account.lastname }} {{ item.account.firstname }}</td>
+            <td>{{ item.account.fullname }}</td>
             <td>{{ item.date | date("d/m/Y") }}</td>
             <td>{{ item.product.value }}</td>
             <td>{{ item.color ? item.color.value : "-" }}</td>

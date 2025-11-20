@@ -12,16 +12,19 @@
         {% endblock %}
     </head>
     <body>
-        <header>
+        <header class="header-custom">
             <div class="container-fluid">
-                {% if app.user %}
-                    <div class="col clearfix">
-                        <div class="float-end">
-                            Welcome <span class="fw-bold">{{ app.user.firstname | capitalize }}, </span>
-                            <a href="{{ path('app_logout') }}">Logout</a>
+                    <div class="row align-items-center">
+                        <div class="col fw-bold">
+                            SIMPLE TEST APP
                         </div>
+                        {% if app.user %}
+                            <div class="col text-end welcome-text">
+                                Welcome <span>{{ app.user.firstname | capitalize }}</span>,
+                                <a href="{{ path('app_logout') }}">Logout</a>
+                            </div>
+                        {% endif %}
                     </div>
-                {% endif %}
             </div>
         </header>
         <main>

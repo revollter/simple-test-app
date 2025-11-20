@@ -7,16 +7,27 @@
         <div data-controller="add-data"
              data-add-data-form-url="{{ path('data_form') }}"
              data-add-data-table-url="{{ path('data_table') }}">
-            <div class="card m-5">
-                <div class="card-body" id="table-data">
-                    <div data-add-data-target="table">
-                        {% include 'data/_table.html.twig' %}
+            <div class="row m-5 mb-0 ">
+                <div class="col">
+                    <h3 class="text-secondary text-decoration-underline">Dashboard</h3>
+                </div>
+                <div class="col">
+                    <div class="float-end">
+                        <button class="btn btn-outline-primary" data-action="add-data#open">Add</button>
+                        <a href="{{ path('data_export') }}" class="btn btn-outline-secondary">Export xlsx</a>
                     </div>
                 </div>
             </div>
-            <div class="mt-0 m-5">
-                <button class="btn btn-outline-success" data-action="add-data#open">Add</button>
-                <a href="{{ path('data_export') }}" class="btn btn-outline-secondary float-end">Export xlsx</a>
+            <div class="row">
+                <div class="col">
+                    <div class="card bootstrap-card m-5 mt-3">
+                        <div class="card-body" id="table-data">
+                            <div data-add-data-target="table">
+                                {% include 'data/_table.html.twig' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             {% include 'parts/modal.html.twig' %}
         </div>
