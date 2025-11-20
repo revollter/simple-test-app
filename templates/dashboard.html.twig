@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card m-5">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>User name</th>
+                        <th>Date</th>
+                        <th>Product</th>
+                        <th>Color</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in data %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.account.lastname }} {{ item.account.firstname }}</td>
+                            <td>{{ item.date | date("d/m/Y") }}</td>
+                            <td>{{ item.product.value }}</td>
+                            <td>{{ item.color ? item.color.value : "-" }}</td>
+                            <td>{{ item.amount }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="mt-0 m-5">
+            <button class="btn btn-outline-success">Add</button>
+            <button class="btn btn-outline-secondary float-end">Export</button>
+        </div>
+    </div>
+{% endblock %}

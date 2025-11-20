@@ -74,7 +74,7 @@ class Data
         return $this;
     }
 
-    public function getColor(): Color
+    public function getColor(): ?Color
     {
         return $this->color;
     }

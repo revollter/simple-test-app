@@ -12,6 +12,20 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header>
+            <div class="container-fluid">
+                {% if app.user %}
+                    <div class="col clearfix">
+                        <div class="float-end">
+                            Welcome <span class="fw-bold">{{ app.user.firstname | capitalize }}, </span>
+                            <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </header>
+        <main>
+            {% block body %}{% endblock %}
+        </main>
     </body>
 </html>
