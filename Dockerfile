@@ -3,8 +3,9 @@ FROM php:8.3-apache
 RUN a2enmod rewrite
 
 RUN apt-get update && apt-get install -y \
-    git zip unzip libpq-dev libicu-dev libzip-dev \
-    && docker-php-ext-install pdo pdo_pgsql intl zip
+    git zip unzip libpq-dev libicu-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev \
+    && docker-php-ext-configure gd --with-jpeg --with-freetype \
+    && docker-php-ext-install pdo pdo_pgsql intl zip gd
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
