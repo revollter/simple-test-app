@@ -18,11 +18,6 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // to be sure for ids consistence
-        $connection = $manager->getConnection();
-        $connection->executeStatement('TRUNCATE TABLE "users" CASCADE;');
-        $connection->executeStatement('ALTER SEQUENCE "users_id_seq" RESTART WITH 1;');
-
         $usersData = [
             ['firstName' => 'admin',     'lastName' => 'admin',      'login' => 'admin',       'password' => 'test123'],
             ['firstName' => 'Mariusz',   'lastName' => 'Nowak',      'login' => 'm.nowak',     'password' => 'test123'],
@@ -31,6 +26,7 @@ class UserFixtures extends Fixture
             ['firstName' => 'Michał',    'lastName' => 'Wabik',      'login' => 'm.wabik',     'password' => 'test123'],
         ];
 
+        $i = 1;
         foreach ($usersData as $data) {
             $user = new User();
             $user->setFirstName($data['firstName']);
@@ -39,6 +35,8 @@ class UserFixtures extends Fixture
 
             $hashedPassword = $this->passwordHasher->hashPassword($user, $data['password']);
             $user->setPassword($hashedPassword);
+            $this->addReference('user_' . $i, $user);
+            $i++;
 
             $manager->persist($user);
         }

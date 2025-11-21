@@ -50,7 +50,7 @@ class DataFixtures extends Fixture implements DependentFixtureInterface
 
         foreach ($data as $item) {
             $entity = new Data();
-            $entity->setUser($users[$item['user_id']]);
+            $entity->setUser($this->getReference('user_' . $item['user_id'], User::class));
             $entity->setDate(new \DateTime($item['date']));
             $entity->setProduct(Product::from($item['product']));
             $entity->setColor($item['color'] ? Color::from($item['color']) : null);
