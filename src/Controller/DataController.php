@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Data;
 use App\Form\DataType;
 use App\Repository\DataRepository;
+use App\Service\DataExportService;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -46,8 +47,7 @@ class DataController extends AbstractController
     public function save(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $data = new Data();
-        $data->setAccount($this->getUser());
-        $data->setDate(new \DateTime());
+        $data->setUser($this->getUser());
 
         $form = $this->createForm(DataType::class, $data);
         $form->handleRequest($request);
@@ -71,7 +71,7 @@ class DataController extends AbstractController
     {
         $data = new Data();
         $data->setDate(new \DateTime());
-        $data->setAccount($this->getUser());
+        $data->setUser($this->getUser());
 
         $form = $this->createForm(DataType::class, $data);
 
@@ -81,32 +81,10 @@ class DataController extends AbstractController
     }
 
     #[Route('/data/export', name: 'data_export')]
-    public function export(): StreamedResponse
+    public function export(DataExportService $exportService): StreamedResponse
     {
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        $sheet->setCellValue('A1', 'ID');
-        $sheet->setCellValue('B1', 'User name');
-        $sheet->setCellValue('C1', 'Date');
-        $sheet->setCellValue('D1', 'Product');
-        $sheet->setCellValue('E1', 'Color');
-        $sheet->setCellValue('F1', 'Amount');
-
-        $dataList = $this->dataRepository->findAll();
-
-        $row = 2;
-        foreach ($dataList as $item) {
-            $sheet->setCellValue('A'.$row, $item->getId());
-            $sheet->setCellValue('B'.$row, $item->getAccount()->getFullName() ?? '');
-            $sheet->setCellValue('C'.$row, $item->getDate()?->format('Y-m-d'));
-            $sheet->setCellValue('D'.$row, $item->getProduct()?->value ?? '');
-            $sheet->setCellValue('E'.$row, $item->getColor()?->value ?? '');
-            $sheet->setCellValue('F'.$row, $item->getAmount());
-            $row++;
-        }
-
-        $writer = new Xlsx($spreadsheet);
+        $spreadsheet = $exportService->generateSpreadsheet();
+        $writer = $exportService->createWriter($spreadsheet);
 
         $response = new StreamedResponse(function() use ($writer) {
             $writer->save('php://output');

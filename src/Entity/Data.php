@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
 #[PenColor]
 class Data
 {
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -19,7 +24,7 @@ class Data
 
     #[ORM\ManyToOne(inversedBy: 'data')]
     #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", nullable: false)]
-    private ?User $account = null;
+    private ?User $user = null;
 
     #[ORM\Column]
     private ?\DateTime $date = null;
@@ -38,14 +43,14 @@ class Data
         return $this->id;
     }
 
-    public function getAccount(): ?User
+    public function getUser(): ?User
     {
-        return $this->account;
+        return $this->user;
     }
 
-    public function setAccount(?User $account): static
+    public function setUser(?User $user): static
     {
-        $this->account = $account;
+        $this->user = $user;
 
         return $this;
     }

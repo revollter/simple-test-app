@@ -106,7 +106,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->data->contains($data)) {
             $this->data->add($data);
-            $data->setAccount($this);
+            $data->setUser($this);
         }
 
         return $this;
